@@ -5,6 +5,9 @@ const fs = require("fs");
 const writeFileAsync = util.promisify(fs.writeFile);
 const electron = require("electron");
 const electronHTMLTo = require("electron-html-to");
+var pdf = require('html-pdf');
+var options = { format: 'Letter' };
+
 
 function promptUser() {
     return inquirer.prompt([{
@@ -24,27 +27,34 @@ function promptUser() {
 
 promptUser()
     .then(function (response) {
-        console.log(response);
-        axios.get(`https://api.github.com/users/${response.username}`)
-            .then(function (user) {
-                const joinedData = {
-                    color: response.color,
-                    ...user.data
-                }
-                console.log(joinedData);
-                const html = generateHTML(joinedData);
-                // console.log(html);
-                writeFileAsync("index.html", html);
-            })
-    })
-    .catch(function (err) {
-        console.log(err);
-    })
+            console.log(response);
+            axios.get(`https://api.github.com/users/${response.username}`)
+                .then(function (user) {
+                    const joinedData = {
+                        color: response.color,
+                        //the elipses is used to merge one objects data into another object rather than just adding the object itself into the other object
+                        ...user.data
+                    }
+                    console.log(joinedData);
+                    const html = generateHTML(joinedData);
+                    // console.log(html);
+                    writeFileAsync("index.html", html);
+                    (pdf.create(html, options).toFile('./newProfile.pdf', function (err, res) {
+                        pdf.create(html).toFile([filepath, ], function (err, res) {
+                            console.log(res.filename);
+                        });
+                        if (err) return console.log(err);
+                        console.log(res);
+                    }));
+                })
+                .catch(function (err) {
+                    console.log(err);
+                })
 
 
-function generateHTML(response) {
-    console.log(response);
-    return `
+            function generateHTML(response) {
+                console.log(response);
+                return `
             <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -75,4 +85,5 @@ function generateHTML(response) {
             </div>
             </body>
             </html>`;
-}
+            }
+        });
