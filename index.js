@@ -67,13 +67,13 @@ promptUser()
             </head>
             <body>
                 <div class="jumbotron jumbotron-fluid">
-                    <div class="container"  style="background-color: ${response.color}">
+                    <div class="container"  style="color: white; background-color: ${response.color}">
                         <img href="${response.avatar_url}" style="size: 200px, 200px"/>
                         <br>
                         <h1 class="display-4">Hi! <br> My name is ${response.name}</h1>
                             <ul class="list-group">
-                            <li class="list-group-item">GitHub: ${response.html_url}</li>
-                            <li class="list-group-item">Location: ${response.location}</li>
+                            <li class="list-group-item" style="color: darkslategrey">GitHub: ${response.html_url}</li>
+                            <li class="list-group-item" style="color: darkslategrey">Location: ${response.location}</li>
                             </ul>
                         <h3>${response.bio}</h3>
                     </div>
