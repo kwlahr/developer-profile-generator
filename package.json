@@ -22,7 +22,7 @@
     "electron": "^7.1.1",
     "electron-html-to": "^2.6.0",
     "fs": "0.0.1-security",
-    "html-pdf": "^2.2.0",
+    "html-pdf": "^3.0.1",
     "inquirer": "^7.0.0",
     "open": "^7.0.0",
     "prompts": "^2.2.1",
